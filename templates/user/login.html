@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <form action="">
+        <h3>Faça Login</h3>
+        <input type="text" name="email" placeholder="E-mail">
+        <input type="password" name="password" placeholder="Senha">
+        <input type="submit" value="ENTRAR">
+    </form>
+</div>
+
+{% endblock %}
+
+{% block style %}
+<style>
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 70%;
+    }
+
+    .container h3 {
+        text-align: center;
+    }
+
+    .container form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 250px;
+    }
+</style>
+
+{% endblock %}

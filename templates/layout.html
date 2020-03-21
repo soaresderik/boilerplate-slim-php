@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem vindo!</title>
+</head>
+
+<body>
+    <div class="main">
+        {% block content %}{% endblock %}
+
+        {% block style %}{% endblock %}
+    </div>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            outline: 0;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            max-width: 900px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        body {
+            background-color: #0c0636;
+        }
+
+        body,
+        input,
+        button {
+            font: 14px Roboto, sans-serif;
+        }
+
+        input {
+            margin: 4px;
+            padding: 8px;
+            width: 100%;
+        }
+
+        button,
+        input[type=submit],
+        input[type=button] {
+            cursor: pointer;
+            border: 0;
+        }
+    </style>
+</body>
+
+</html>

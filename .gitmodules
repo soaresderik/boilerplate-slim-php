@@ -1,0 +1,3 @@
+[submodule "php-mysql-migrate"]
+	path = php-mysql-migrate
+	url = https://github.com/kennberg/php-mysql-migrate

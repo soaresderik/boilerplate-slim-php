@@ -12,7 +12,11 @@ class UserRepository {
     }
 
     public function insertUser($data) {
-        $sql = "INSERT INTO users SET email = :email, password = :password;";
+        $sql = "INSERT INTO users 
+                    SET name = :name,
+                    email = :email,
+                    password = :password
+        ";
 
         $this->conn->prepare($sql)->execute($data);
 

@@ -6,6 +6,8 @@ use Slim\App;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+session_start();
+
 $containerBuilder = new ContainerBuilder();
 
 $containerBuilder->addDefinitions(__DIR__ . '/container.php');

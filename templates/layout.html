@@ -9,6 +9,12 @@
 
 <body>
     <div class="main">
+        {% for item in messages.error %}
+        <div class="alert alert-danger">
+            {{item}}
+        </div>
+        {% endfor %}
+
         {% block content %}{% endblock %}
 
         {% block style %}{% endblock %}

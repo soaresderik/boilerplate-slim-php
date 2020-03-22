@@ -9,6 +9,7 @@ $settings = [];
 $settings['root'] = dirname(__DIR__);
 $settings['temp'] = $settings['root'] . '/tmp';
 $settings['public'] = $settings['root'] . '/public';
+$settings['cache_path'] = $settings['root'] . '/cache';
 
 
 $settings['error_handler_middleware'] = [

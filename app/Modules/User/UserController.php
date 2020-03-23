@@ -2,10 +2,12 @@
 
 namespace App\Modules\User;
 
-use App\Modules\User\UserRepository;
 use App\Modules\User\Data\UserCreateData;
+use App\Modules\User\UserRepository;
+use Selective\Config\Configuration;
 use Rakit\Validation\Validator;
 use Slim\Http\ServerRequest as Request;
+use ReallySimpleJWT\Token;
 use Slim\Flash\Messages;
 use Slim\Http\Response;
 use Slim\Views\Twig;
@@ -17,10 +19,32 @@ class UserController {
         $this->userRepository = $c->get(UserRepository::class);
         $this->validator = $c->get(Validator::class);
         $this->messages = $c->get(Messages::class);
+        $this->JWTSecret = $c->get(Configuration::class)->getString("jwt.secret");
+        // $this->
     }
 
     public function index($req, $res) {
         return $this->view->render($res, "user/login.html");
+    }
+
+    public function login($req, $res) {
+        try {
+            $body = $req->getParams();
+
+            $user = $this->userRepository->getUserByEmail($body["email"]);
+
+            $message = "Usuário ou senha incorreto.";
+            if(!$user) return $res->withJson(["error" => $message], 401);
+
+            if(!password_verify($body["password"], $user["password"]))
+                return $res->withJson(["error" => $message], 401);
+
+            $token = Token::create($user["id"], $this->JWTSecret, time() + 3600, "authenticated");
+
+            return $res->withJson(["token" => $token]); 
+        } catch (\Exception $err){
+            return $res->withJson(["error" => "Ocorreu um erro no sistema!"], 500);
+        }
     }
 
     public function create($req, $res) {
@@ -39,9 +63,7 @@ class UserController {
         $validation->validate();
 
         if($validation->fails()) {
-            $this->messages->addMessage('messages', $validation->errors()->all());
-
-            return $res->withHeader("Location", "/users/register");
+            return $res->withJson(["errors" => $validation->errors()->all()], 400);
         }
 
         $user = [

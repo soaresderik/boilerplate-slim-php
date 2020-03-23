@@ -43,5 +43,9 @@ $settings["db"] = [
     ],
 ];
 
+$settings['jwt'] = [
+    'secret' => 'Secret123!456$'
+];
+
 
 return $settings;

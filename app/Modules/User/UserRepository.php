@@ -3,23 +3,35 @@
 namespace App\Modules\User;
 
 use App\Modules\User\Data\UserCreateData;
+use App\Services\QuerySQL;
 use PDO;
 
-class UserRepository {
+class UserRepository extends QuerySQL {
 
     function __construct(PDO $conn) {
-        $this->conn = $conn;
+        parent::__construct($conn);
     }
 
     public function insertUser($data) {
-        $sql = "INSERT INTO users 
-                    SET name = :name,
-                    email = :email,
-                    password = :password
-        ";
 
-        $this->conn->prepare($sql)->execute($data);
+        $result = $this->query("INSERT INTO users 
+        SET name = :name,  email = :email, password = :password", 
+        [ 
+            ":name" => $data["name"],
+            ":email" => $data["email"],
+            ":password" => $data["password"],
+        ]
+        );
 
-        return (int) $this->conn->lastInsertId();
+        return (int) $result;
+    }
+
+    public function getUserByEmail($email) {
+
+        $result = $this->select("SELECT * FROM users WHERE email = :email", [
+            ":email" => $email
+        ]);
+
+        return $result[0];
     }
 }
